@@ -51,7 +51,7 @@ public class CodeGeneratorPlus {
                 new GlobalConfig()
                         .setOutputDir(PROJECT_PATH + JAVA_PATH) //输出目录
                         .setFileOverride(true) //是否覆盖文件
-//                        .setActiveRecord(true) //开始 activeRecord 模式
+                        .setActiveRecord(false) //开始 activeRecord 模式
                         .setEnableCache(false) // XML 二级缓存
                         .setBaseResultMap(true) // XML ResultMap
                         .setBaseColumnList(true) // XML columnList
@@ -123,10 +123,10 @@ public class CodeGeneratorPlus {
                         // 至您项目 src/main/resources/template 目录下，模板名称也可自定义如下配置：
                         // .setController("...");
                         .setEntity("../test-classes/generator/template/mybatis-plus/entity.java.vm")
-                // .setMapper("...");
-                // .setXml("...");
-                // .setService("...");
-                // .setServiceImpl("...");
+                        .setMapper(null)
+                        .setService(null)
+                        .setServiceImpl(null)
+                        .setController(null)
         );
         mpg.execute();
     }
