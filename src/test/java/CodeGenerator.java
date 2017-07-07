@@ -43,7 +43,7 @@ public class CodeGenerator {
     private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 
     private static final String PROJECT_PATH = System.getProperty("user.dir");//项目在硬盘上的基础路径
-    private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + "/src/test/resources/generator/template";//模板位置
+    private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + "/src/test/resources/generator/template/tk-mybatis";//模板位置
 
     private static final String JAVA_PATH = "/src/main/java"; //java文件路径
     private static final String RESOURCES_PATH = "/src/main/resources";//资源文件路径
