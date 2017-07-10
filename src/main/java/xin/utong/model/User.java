@@ -1,6 +1,7 @@
 package xin.utong.model;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 public class User {
@@ -82,7 +83,7 @@ public class User {
     private Integer version;
 
     @Transient
-    private Integer other;
+    private List<String> roles;
 
     /**
      * 获取主键id
@@ -354,11 +355,11 @@ public class User {
         this.version = version;
     }
 
-    public Integer getOther() {
-        return other;
+    public List<String> getRoles() {
+        return roles;
     }
 
-    public void setOther(Integer other) {
-        this.other = other;
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }

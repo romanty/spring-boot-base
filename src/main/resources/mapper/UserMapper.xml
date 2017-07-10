@@ -21,4 +21,7 @@
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="version" jdbcType="INTEGER" property="version" />
   </resultMap>
+  <select id="selectByAccount" resultMap="BaseResultMap">
+    select * from user where account = #{account} limit 1
+  </select>
 </mapper>
