@@ -8,9 +8,11 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
+ * jwt user
  * Created by apple on 2017/7/7.
  */
 public class JwtUser implements UserDetails {
+    private static final long serialVersionUID = 7290564184447311757L;
     private final String id;
     private final String username;
     private final String password;
@@ -41,12 +43,12 @@ public class JwtUser implements UserDetails {
     @JsonIgnore
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
     // 账户是否未过期
@@ -60,21 +62,21 @@ public class JwtUser implements UserDetails {
     @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     // 密码是否未过期
     @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     // 账户是否激活
     @JsonIgnore
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     // 上次密码重置日期

@@ -54,37 +54,37 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         converters.add(converter);
     }
 
-    // 统一异常
-    @Override
-    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
-        exceptionResolvers.add((request, response, handler, ex) -> {
-            Result result = new Result();
-            if (handler instanceof HandlerMethod) {
-                HandlerMethod handlerMethod = (HandlerMethod) handler;
-
-                if (ex instanceof ServiceException) {//业务失败的异常，如“账号或密码错误”
-                    result.setCode(ResultCode.FAIL).setMessage(ex.getMessage());
-                    logger.info(ex.getMessage());
-                } else {
-                    result.setCode(ResultCode.INTERNAL_SERVER_ERROR).setMessage("接口 [" + request.getRequestURI() + "] 内部错误");
-                    String message = String.format("接口 [%s] 出现异常，方法：%s.%s，异常摘要：%s",
-                            request.getRequestURI(),
-                            handlerMethod.getBean().getClass().getName(),
-                            handlerMethod.getMethod().getName(),
-                            ex.getMessage());
-                    logger.error(message, ex);
-                }
-            } else {
-                if (handler instanceof NoHandlerFoundException) {
-                    result.setCode(ResultCode.NOT_FOUND).setMessage("接口 【" + request.getRequestURI() + "] 不存在");
-                } else {
-                    result.setCode(ResultCode.INTERNAL_SERVER_ERROR).setMessage(ex.getMessage());
-                }
-            }
-            responseResult(response, result);
-            return new ModelAndView();
-        });
-    }
+//    // 统一异常
+//    @Override
+//    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+//        exceptionResolvers.add((request, response, handler, ex) -> {
+//            Result result = new Result();
+//            if (handler instanceof HandlerMethod) {
+//                HandlerMethod handlerMethod = (HandlerMethod) handler;
+//
+//                if (ex instanceof ServiceException) {//业务失败的异常，如“账号或密码错误”
+//                    result.setCode(ResultCode.FAIL).setMessage(ex.getMessage());
+//                    logger.info(ex.getMessage());
+//                } else {
+//                    result.setCode(ResultCode.INTERNAL_SERVER_ERROR).setMessage("接口 [" + request.getRequestURI() + "] 内部错误");
+//                    String message = String.format("接口 [%s] 出现异常，方法：%s.%s，异常摘要：%s",
+//                            request.getRequestURI(),
+//                            handlerMethod.getBean().getClass().getName(),
+//                            handlerMethod.getMethod().getName(),
+//                            ex.getMessage());
+//                    logger.error(message, ex);
+//                }
+//            } else {
+//                if (handler instanceof NoHandlerFoundException) {
+//                    result.setCode(ResultCode.NOT_FOUND).setMessage("接口 【" + request.getRequestURI() + "] 不存在");
+//                } else {
+//                    result.setCode(ResultCode.INTERNAL_SERVER_ERROR).setMessage(ex.getMessage());
+//                }
+//            }
+//            responseResult(response, result);
+//            return new ModelAndView();
+//        });
+//    }
 
     // 解决跨域问题
     @Override
