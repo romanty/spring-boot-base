@@ -75,7 +75,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 //                    logger.error(message, ex);
 //                }
 //            } else {
-//                if (handler instanceof NoHandlerFoundException) {
+//                if (ex instanceof NoHandlerFoundException) {
 //                    result.setCode(ResultCode.NOT_FOUND).setMessage("接口 【" + request.getRequestURI() + "] 不存在");
 //                } else {
 //                    result.setCode(ResultCode.INTERNAL_SERVER_ERROR).setMessage(ex.getMessage());
