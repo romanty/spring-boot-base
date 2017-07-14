@@ -5,14 +5,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import xin.utong.configurer.aspect.BindingError;
 import xin.utong.core.Result;
 import xin.utong.core.ResultCode;
 import xin.utong.core.ServiceException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 统一异常
@@ -91,5 +100,45 @@ public class GlobalExceptionHandler {
         result.setCode(ResultCode.NOT_FOUND).setMessage("Not Found");
         logger.error("Not Found ", ex);
         return result;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result<List<BindingError>> handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        List<BindingError> bindingErrors = new ArrayList<>();
+        String msg = processErrors(ex.getBindingResult(), bindingErrors);
+        Result<List<BindingError>> result = new Result<>();
+        result.setCode(ResultCode.FAIL).setMessage(msg).setData(bindingErrors);
+        return result;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(BindException.class)
+    public Result<List<BindingError>> handleBindException(BindException ex) {
+        List<BindingError> bindingErrors = new ArrayList<>();
+        String msg = processErrors(ex.getBindingResult(), bindingErrors);
+        Result<List<BindingError>> result = new Result<>();
+        result.setCode(ResultCode.FAIL).setMessage(msg).setData(bindingErrors);
+        return result;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public Result<Void> handlerMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
+        Result<Void> reps = new Result<>();
+        return reps.setCode(ResultCode.FAIL).setMessage("Messing request parameter");
+    }
+
+    private String processErrors(BindingResult result, List<BindingError> bindingErrors) {
+        StringBuilder sb = new StringBuilder("参数错误");
+        for (FieldError error : result.getFieldErrors()) {
+            BindingError be = new BindingError();
+            be.setMessage(error.getDefaultMessage());
+            be.setName(error.getField());
+            bindingErrors.add(be);
+            sb.append("\n");
+            sb.append(be.getMessage());
+        }
+        return sb.toString();
     }
 }

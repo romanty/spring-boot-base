@@ -13,6 +13,7 @@ import xin.utong.model.UserVo;
 import xin.utong.service.AuthService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 /**
  * 鉴权入口
@@ -27,7 +28,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("${jwt.route.authentication.path}")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest request) {
+    public ResponseEntity<?> createAuthenticationToken(@Valid @RequestBody JwtAuthenticationRequest request) {
         final String token = authService.login(request.getUsername(), request.getPassword());
         return ResponseEntity.ok(new JwtAuthenticationResponse(token));
     }
