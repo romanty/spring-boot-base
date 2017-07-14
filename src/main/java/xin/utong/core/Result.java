@@ -2,14 +2,17 @@ package xin.utong.core;
 
 import com.alibaba.fastjson.JSON;
 
+import java.io.Serializable;
+
 /**
  * 统一API响应结果封装
  * Created by apple on 2017/7/6.
  */
-public class Result {
+public class Result<T> implements Serializable {
+    private static final long serialVersionUID = 6160056333237791400L;
     private int code;
     private String message;
-    private Object data;
+    private T data;
 
     public Result setCode(ResultCode resultCode) {
         this.code = resultCode.code;
@@ -34,11 +37,11 @@ public class Result {
         return message;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public Result setData(Object data) {
+    public Result setData(T data) {
         this.data = data;
         return this;
     }
