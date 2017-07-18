@@ -12,11 +12,16 @@ spring:
       database: test
       host: 47.94.169.30
       port: 17027
+  redis:
+    host: 47.94.169.30
+    database: 0
+    port: 6001
 logging:
   level:
     org.springframework:
       data: DEBUG
       security: DEBUG
+
 
 # Jwt
 jwt:
